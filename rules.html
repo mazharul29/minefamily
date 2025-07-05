@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineE Server Rules</title>
+    <link href="https://fonts.googleapis.com/css2?family=Minecraft&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Minecraft', Arial, sans-serif;
+            background: #1a1a1a url('https://images.unsplash.com/photo-1607513746994-51f730a44832?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            padding: 20px 0;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            color: #55FF55;
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            margin-bottom: 10px;
+        }
+        
+        nav {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        nav a {
+            color: #55FF55;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 0 #000;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover {
+            color: #AAFFAA;
+            text-decoration: underline;
+        }
+        
+        .rules-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 4px solid #555;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px auto;
+            animation: slideUp 1s ease-in-out;
+        }
+        
+        h2 {
+            color: #FF5555;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 2rem;
+        }
+        
+        .rule-category {
+            margin-bottom: 30px;
+        }
+        
+        .rule-category h3 {
+            color: #55FF55;
+            text-shadow: 2px 2px 0 #000;
+            margin: 15px 0 10px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #555;
+            padding-bottom: 5px;
+        }
+        
+        .rule {
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .rule::before {
+            content: '•';
+            color: #FFFF55;
+            position: absolute;
+            left: 0;
+        }
+        
+        .warning {
+            color: #FF5555;
+            font-weight: bold;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 0 #000;
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            color: #AAAAAA;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+            
+            nav a {
+                font-size: 1rem;
+                margin: 0 10px;
+            }
+            
+            .rules-container {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .rule-category h3 {
+                font-size: 1.2rem;
+            }
+            
+            .rule {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">MineE Server Rules</h1>
+        </header>
+        
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="rules.html">Rules</a>
+        </nav>
+        
+        <div class="rules-container">
+            <h2>SERVER RULES</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Breaking these rules may result in a ban or mute</p>
+            
+            <div class="rule-category">
+                <h3>General Rules</h3>
+                <div class="rule">Be respectful to all players and staff members</div>
+                <div class="rule">No racism, sexism, homophobia, or other forms of discrimination</div>
+                <div class="rule">No spamming or excessive use of caps in chat</div>
+                <div class="rule">No advertising other servers or services</div>
+                <div class="rule">No inappropriate usernames or skins</div>
+            </div>
+            
+            <div class="rule-category">
+                <h3>Gameplay Rules</h3>
+                <div class="rule">NO HACKING - Any use of hacked clients, x-ray, or unfair advantages is prohibited</div>
+                <div class="rule">NO SCAMMING - Do not attempt to scam other players of their items or currency</div>
+                <div class="rule">NO GRIEFING - Do not destroy other players' builds without permission</div>
+                <div class="rule">NO GRIEFING SPAWN - The spawn area is protected, do not attempt to modify it</div>
+                <div class="rule">No exploiting bugs or glitches</div>
+                <div class="rule">No AFK farming without staff approval</div>
+            </div>
+            
+            <div class="rule-category">
+                <h3>PvP Rules</h3>
+                <div class="rule">No spawn killing or camping</div>
+                <div class="rule">No teaming in solo PvP modes</div>
+                <div class="rule">Combat logging is prohibited</div>
+            </div>
+            
+            <div class="rule-category">
+                <h3>Voice Chat Rules (If applicable)</h3>
+                <div class="rule">No excessive screaming or loud noises</div>
+                <div class="rule">No playing music or sounds through voice chat</div>
+                <div class="rule">Keep voice chat appropriate (same standards as text chat)</div>
+            </div>
+            
+            <div class="warning">
+                These rules are not exhaustive. Staff members have final say in rule interpretations.
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 MineFamily. all right claimed.</p>
+            <p>Powered By MineFamily</p>
+        </footer>
+    </div>
+</body>
+</html>
