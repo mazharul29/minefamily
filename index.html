@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineFamily - Minecraft Server</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Minecraft&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Minecraft', Arial, sans-serif;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: #0a0a0a;
+            position: relative;
+        }
+        
+        /* Minecraft-inspired animated background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: linear-gradient(135deg, #0a1a0a 0%, #0a0a1a 50%, #1a0a0a 100%);
+            overflow: hidden;
+        }
+        
+        .minecraft-block {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            background-size: cover;
+            opacity: 0.1;
+            animation: floatBlock 20s linear infinite;
+            z-index: -2;
+            image-rendering: pixelated;
+            filter: brightness(0.8);
+        }
+        
+        @keyframes floatBlock {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.1;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0.1;
+            }
+        }
+        
+        /* Overlay for content readability */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,20,0,0.9) 0%, rgba(0,0,0,0.95) 100%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header {
+            padding: 20px 0;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .server-logo {
+            height: 100px;
+            width: auto;
+            image-rendering: pixelated;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 0 10px #55FF55);
+            border-radius: 50%;
+            background: rgba(0, 20, 0, 0.7);
+            padding: 10px;
+        }
+        
+        .server-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+            filter: drop-shadow(0 0 15px #55FF55);
+        }
+        
+        .logo-text {
+            font-size: 3.5rem;
+            color: #55FF55;
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #55FF55, #AAFFAA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #AAAAAA;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 30px;
+        }
+        
+        .server-info {
+            background-color: rgba(10, 30, 10, 0.7);
+            border: 4px solid #55ff55;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px auto;
+            max-width: 700px;
+            animation: slideUp 1s ease-in-out;
+            box-shadow: 0 0 30px rgba(85, 255, 85, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .server-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(85,255,85,0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        .server-address {
+            font-size: 1.8rem;
+            margin: 20px 0;
+            color: #FFFF55;
+            text-shadow: 2px 2px 0 #000;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #5555FF;
+        }
+        
+        .version {
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 25px;
+            background: linear-gradient(145deg, rgba(85, 85, 255, 0.4), rgba(85, 85, 255, 0.2));
+            border: 2px solid #5555FF;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .players-online {
+            margin: 25px 0;
+            font-size: 1.4rem;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+        }
+        
+        .join-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(145deg, #55FF55, #33CC33);
+            color: #000;
+            font-size: 1.6rem;
+            text-decoration: none;
+            border: none;
+            border-radius: 10px;
+            margin: 25px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Minecraft', Arial, sans-serif;
+            text-shadow: 1px 1px 0 #FFF;
+            box-shadow: 0 6px 0 #33AA33, 0 12px 20px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .join-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .join-button:hover {
+            background: linear-gradient(145deg, #66FF66, #44DD44);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #33AA33, 0 15px 25px rgba(0, 0, 0, 0.6);
+        }
+        
+        .join-button:hover::before {
+            left: 100%;
+        }
+        
+        .join-button:active {
+            transform: translateY(5px);
+            box-shadow: 0 0 0 #33AA33, 0 5px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 50px 0;
+            animation: fadeIn 1.5s ease-in-out;
+            gap: 20px;
+        }
+        
+        .feature {
+            background: rgba(10, 30, 10, 0.7);
+            border: 3px solid #55FF55;
+            border-radius: 12px;
+            padding: 30px 20px;
+            width: 280px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #55FF55, #33AA33, #55FF55);
+        }
+        
+        .feature:hover {
+            transform: translateY(-15px);
+            border-color: #AAFFAA;
+            box-shadow: 0 15px 30px rgba(85, 255, 85, 0.4);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #FFFF55;
+            text-shadow: 0 0 10px rgba(255, 255, 85, 0.5);
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #55FF55;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .feature p {
+            color: #DDD;
+            line-height: 1.6;
+        }
+        
+        nav {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        nav a {
+            color: #55FF55;
+            text-decoration: none;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 0 #000;
+            transition: all 0.3s;
+            background: rgba(10, 40, 10, 0.6);
+            border-radius: 8px;
+            border: 2px solid #55FF55;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        nav a:hover {
+            color: #AAFFAA;
+            background: rgba(20, 60, 20, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(85, 255, 85, 0.3);
+        }
+        
+        .discord-btn {
+            background: rgba(88, 101, 242, 0.6);
+            border: 2px solid #5865F2;
+        }
+        
+        .discord-btn:hover {
+            background: rgba(88, 101, 242, 0.8);
+        }
+        
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            color: #AAAAAA;
+            font-size: 0.9rem;
+            background: rgba(0, 10, 0, 0.7);
+            border-radius: 10px;
+            border-top: 2px solid #55FF55;
+        }
+        
+        .server-options {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(10, 30, 10, 0.95);
+            border: 4px solid #55FF55;
+            border-radius: 15px;
+            padding: 40px;
+            z-index: 100;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 50px rgba(85, 255, 85, 0.5);
+            animation: popIn 0.4s ease-out;
+        }
+        
+        @keyframes popIn {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .server-option {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(20, 20, 40, 0.6);
+            border: 2px solid #5555FF;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .server-option:hover {
+            background: rgba(30, 30, 60, 0.8);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .server-option h3 {
+            color: #55FF55;
+            margin-bottom: 8px;
+            font-size: 1.4rem;
+        }
+        
+        .server-option p {
+            font-size: 1.2rem;
+            color: #FFFF55;
+        }
+        
+        .server-option small {
+            color: #AAA;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 8px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #FF5555;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .close-btn:hover {
+            background: rgba(255, 85, 85, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 50, 10, 0.9);
+            color: #55FF55;
+            padding: 15px 30px;
+            border-radius: 8px;
+            border: 2px solid #55FF55;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1000;
+            font-size: 1.2rem;
+        }
+        
+        .notification.show {
+            opacity: 1;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .server-logo {
+                height: 80px;
+            }
+            
+            .logo-text {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .server-address {
+                font-size: 1.3rem;
+            }
+            
+            .version {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+            
+            .join-button {
+                padding: 15px 30px;
+                font-size: 1.4rem;
+            }
+            
+            .feature {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .server-options {
+                padding: 30px 20px;
+            }
+            
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav a {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Minecraft background -->
+    <div class="background-animation" id="background-animation"></div>
+    
+    <!-- Dark overlay for content readability -->
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="https://i.ibb.co/TMLWx0XG/Picsart-25-06-19-16-16-45-189.jpg" 
+                     alt="MineFamily Server Logo" 
+                     class="server-logo"
+                     onclick="window.location.href='index.html'">
+                <div>
+                    <h1 class="logo-text">MineFamily</h1>
+                    <p class="subtitle">The Ultimate Minecraft Experience for Java & Bedrock</p>
+                </div>
+            </div>
+        </header>
+        
+        <nav>
+            <a href="index.html">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="rules.html">
+                <i class="fas fa-book"></i> Rules
+            </a>
+            <a href="https://discord.com/invite/WdRRVN95CZ" class="discord-btn" target="_blank">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+        </nav>
+        
+        <div class="server-info">
+            <h2>Join Our Thriving Community!</h2>
+            <div class="server-address">
+                <p><i class="fab fa-java"></i> Java Edition: mc.minee.ggff.net</p>
+                <p><i class="fas fa-mobile-alt"></i> Bedrock/PE: mc.minee.ggff.net</p>
+            </div>
+            
+            <div>
+                <span class="version"><i class="fas fa-code-branch"></i> 1.21+</span>
+                <span class="version"><i class="fas fa-handshake"></i> Crossplay</span>
+                <span class="version"><i class="fas fa-shield-alt"></i> Anti-Cheat</span>
+            </div>
+            
+            <div class="players-online">
+                <p id="player-count"><i class="fas fa-users"></i> Loading players online...</p>
+            </div>
+            
+            <button class="join-button">JOIN SERVER</button>
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon"><i class="fas fa-tree"></i></div>
+                <h3 class="feature-title">Survival Adventure</h3>
+                <p>Experience classic survival gameplay with enhanced features like economy, land claiming, and player shops!</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon"><i class="fas fa-gamepad"></i></div>
+                <h3 class="feature-title">Seamless Crossplay</h3>
+                <p>Play with friends on Java and Bedrock editions! Our server bridges the gap between platforms.</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                <h3 class="feature-title">Secure Environment</h3>
+                <p>Advanced anti-cheat and dedicated staff ensure a fair and enjoyable experience for all players.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 MineFamily. All rights reserved.</p>
+            <p>Powered by <a href="https://web.minee.ggff.net" style="color: #55FF55; text-decoration: none;">web.minee.ggff.net</a></p>
+            <p style="margin-top: 10px; font-size: 0.8rem; color: #888;">
+                <i class="fas fa-sync-alt"></i> Player count updates every 30 seconds
+            </p>
+        </footer>
+    </div>
+
+    <!-- Server IP Options Modal -->
+    <div class="server-options" id="serverOptions">
+        <span class="close-btn" id="closeBtn"><i class="fas fa-times"></i></span>
+        <h2>Select Your Edition</h2>
+        <div class="server-option" onclick="copyToClipboard('mc.minee.ggff.net', 'Java Edition IP copied!')">
+            <h3><i class="fab fa-java"></i> Java Edition</h3>
+            <p>mc.minee.ggff.net</p>
+            <small>Click to copy IP address to clipboard</small>
+        </div>
+        <div class="server-option" onclick="copyToClipboard('mc.minee.ggff.net', 'Bedrock Edition IP copied!')">
+            <h3><i class="fas fa-mobile-alt"></i> Bedrock/PE Edition</h3>
+            <p>mc.minee.ggff.net</p>
+            <small>Click to copy IP address to clipboard</small>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Create animated Minecraft blocks in background
+        function createBackgroundAnimation() {
+            const container = document.getElementById('background-animation');
+            const blocks = [
+                'grass', 'dirt', 'stone', 'oak_planks', 'cobblestone', 
+                'sand', 'gravel', 'coal_ore', 'iron_ore', 'gold_ore'
+            ];
+            
+            // Create floating blocks
+            for (let i = 0; i < 30; i++) {
+                const block = document.createElement('div');
+                block.classList.add('minecraft-block');
+                
+                // Random block type
+                const blockType = blocks[Math.floor(Math.random() * blocks.length)];
+                block.style.backgroundImage = `url('https://minecraft.wiki/images/${blockType}.png?format=original')`;
+                
+                // Random position and size
+                const size = Math.random() * 80 + 40;
+                block.style.width = `${size}px`;
+                block.style.height = `${size}px`;
+                block.style.left = `${Math.random() * 100}%`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 30 + 20;
+                const delay = Math.random() * 15;
+                block.style.animation = `floatBlock ${duration}s linear ${delay}s infinite`;
+                
+                container.appendChild(block);
+            }
+        }
+        
+        // Real player count from mcstatus.io
+        async function updatePlayerCount() {
+            try {
+                const response = await fetch('https://api.mcstatus.io/v2/status/java/mc.minee.ggff.net');
+                const data = await response.json();
+                
+                if (data.online) {
+                    document.getElementById('player-count').innerHTML = 
+                        `<i class="fas fa-users"></i> ${data.players.online}/${data.players.max} players online right now!`;
+                } else {
+                    document.getElementById('player-count').innerHTML = 
+                        `<i class="fas fa-exclamation-triangle"></i> Server is currently offline`;
+                }
+            } catch (error) {
+                document.getElementById('player-count').innerHTML = 
+                    `<i class="fas fa-exclamation-triangle"></i> Error loading player count`;
+                console.error("Error fetching player count:", error);
+            }
+            
+            // Update every 30 seconds
+            setTimeout(updatePlayerCount, 30000);
+        }
+        
+        // Server options modal
+        function showServerOptions() {
+            document.getElementById('serverOptions').style.display = 'block';
+        }
+        
+        function hideServerOptions() {
+            document.getElementById('serverOptions').style.display = 'none';
+        }
+        
+        // Copy to clipboard with notification
+        function copyToClipboard(text, message) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification(message);
+            });
+        }
+        
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            createBackgroundAnimation();
+            updatePlayerCount();
+            
+            // Join button click handler
+            const joinButton = document.querySelector('.join-button');
+            joinButton.addEventListener('click', showServerOptions);
+            
+            // Close button handler
+            document.getElementById('closeBtn').addEventListener('click', hideServerOptions);
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (event) => {
+                if (event.target === document.getElementById('serverOptions')) {
+                    hideServerOptions();
+                }
+            });
+            
+            // Add hover effect to features
+            const features = document.querySelectorAll('.feature');
+            features.forEach(feature => {
+                feature.addEventListener('mouseenter', () => {
+                    feature.style.transform = 'translateY(-15px)';
+                });
+                feature.addEventListener('mouseleave', () => {
+                    feature.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
