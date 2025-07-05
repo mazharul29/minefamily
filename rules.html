@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineFamily Server Rules</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Minecraft&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Minecraft', Arial, sans-serif;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: #0a0a0a;
+            position: relative;
+        }
+        
+        /* Minecraft-inspired animated background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: linear-gradient(135deg, #0a1a0a 0%, #0a0a1a 50%, #1a0a0a 100%);
+            overflow: hidden;
+        }
+        
+        .minecraft-block {
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            background-size: cover;
+            opacity: 0.1;
+            animation: floatBlock 20s linear infinite;
+            z-index: -2;
+            image-rendering: pixelated;
+            filter: brightness(0.8);
+        }
+        
+        @keyframes floatBlock {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0.1;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0.1;
+            }
+        }
+        
+        /* Overlay for content readability */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,20,0,0.9) 0%, rgba(0,0,0,0.95) 100%);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header {
+            padding: 20px 0;
+            animation: fadeIn 1.5s ease-in-out;
+            text-align: center;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .server-logo {
+            height: 100px;
+            width: auto;
+            image-rendering: pixelated;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 0 10px #55FF55);
+            border-radius: 50%;
+            background: rgba(0, 20, 0, 0.7);
+            padding: 10px;
+        }
+        
+        .server-logo:hover {
+            transform: scale(1.05) rotate(5deg);
+            filter: drop-shadow(0 0 15px #55FF55);
+        }
+        
+        .logo-text {
+            font-size: 3.5rem;
+            color: #55FF55;
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #55FF55, #AAFFAA);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #AAAAAA;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 30px;
+        }
+        
+        nav {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        nav a {
+            color: #55FF55;
+            text-decoration: none;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            text-shadow: 2px 2px 0 #000;
+            transition: all 0.3s;
+            background: rgba(10, 40, 10, 0.6);
+            border-radius: 8px;
+            border: 2px solid #55FF55;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        nav a:hover {
+            color: #AAFFAA;
+            background: rgba(20, 60, 20, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(85, 255, 85, 0.3);
+        }
+        
+        .discord-btn {
+            background: rgba(88, 101, 242, 0.6);
+            border: 2px solid #5865F2;
+        }
+        
+        .discord-btn:hover {
+            background: rgba(88, 101, 242, 0.8);
+        }
+        
+        .rules-container {
+            background-color: rgba(10, 30, 10, 0.7);
+            border: 4px solid #ff5555;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 30px auto;
+            animation: slideUp 1s ease-in-out;
+            box-shadow: 0 0 30px rgba(255, 85, 85, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rules-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,85,85,0.1) 0%, transparent 70%);
+            z-index: -1;
+        }
+        
+        h2 {
+            color: #FF5555;
+            text-shadow: 2px 2px 0 #000;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 2.5rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff5555, #ffaa55, #ff5555);
+            border-radius: 3px;
+        }
+        
+        .intro-text {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #FFFF55;
+            text-shadow: 1px 1px 0 #000;
+        }
+        
+        .rule-category {
+            margin-bottom: 35px;
+            padding: 20px;
+            background: rgba(20, 40, 20, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid #55FF55;
+            transition: all 0.3s;
+        }
+        
+        .rule-category:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .rule-category h3 {
+            color: #55FF55;
+            text-shadow: 2px 2px 0 #000;
+            margin: 0 0 15px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .rule {
+            margin: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .rule::before {
+            content: '•';
+            color: #FFFF55;
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+        
+        .rule-icon {
+            color: #FFFF55;
+            font-size: 1.2rem;
+            min-width: 25px;
+            text-align: center;
+            margin-top: 3px;
+        }
+        
+        .warning {
+            color: #FF5555;
+            font-weight: bold;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.3rem;
+            text-shadow: 1px 1px 0 #000;
+            padding: 20px;
+            background: rgba(50, 0, 0, 0.5);
+            border-radius: 8px;
+            border: 2px solid #ff5555;
+        }
+        
+        footer {
+            margin-top: 60px;
+            padding: 20px;
+            color: #AAAAAA;
+            font-size: 0.9rem;
+            background: rgba(0, 10, 0, 0.7);
+            border-radius: 10px;
+            border-top: 2px solid #55FF55;
+            text-align: center;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .server-logo {
+                height: 80px;
+            }
+            
+            .logo-text {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav a {
+                width: 80%;
+            }
+            
+            .rules-container {
+                padding: 20px;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .rule-category h3 {
+                font-size: 1.5rem;
+            }
+            
+            .rule {
+                padding-left: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Minecraft background -->
+    <div class="background-animation" id="background-animation"></div>
+    
+    <!-- Dark overlay for content readability -->
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <img src="https://i.ibb.co/TMLWx0XG/Picsart-25-06-19-16-16-45-189.jpg" 
+                     alt="MineFamily Server Logo" 
+                     class="server-logo"
+                     onclick="window.location.href='index.html'">
+                <div>
+                    <h1 class="logo-text">MineFamily</h1>
+                    <p class="subtitle">Server Rules & Guidelines</p>
+                </div>
+            </div>
+        </header>
+        
+        <nav>
+            <a href="index.html">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <a href="rules.html" style="background: rgba(20, 60, 20, 0.8);">
+                <i class="fas fa-book"></i> Rules
+            </a>
+            <a href="https://discord.com/invite/WdRRVN95CZ" class="discord-btn" target="_blank">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+        </nav>
+        
+        <div class="rules-container">
+            <h2>SERVER RULES</h2>
+            <p class="intro-text">Breaking these rules may result in a ban or mute</p>
+            
+            <div class="rule-category">
+                <h3><i class="fas fa-users"></i> General Rules</h3>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-handshake"></i></span>
+                    Be respectful to all players and staff members
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-ban"></i></span>
+                    No racism, sexism, homophobia, or other forms of discrimination
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-comment-slash"></i></span>
+                    No spamming or excessive use of caps in chat
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-bullhorn"></i></span>
+                    No advertising other servers or services
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-user"></i></span>
+                    No inappropriate usernames or skins
+                </div>
+            </div>
+            
+            <div class="rule-category">
+                <h3><i class="fas fa-gamepad"></i> Gameplay Rules</h3>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-skull"></i></span>
+                    NO HACKING - Any use of hacked clients, x-ray, or unfair advantages is prohibited
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-money-bill-wave"></i></span>
+                    NO SCAMMING - Do not attempt to scam other players of their items or currency
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-house-damage"></i></span>
+                    NO GRIEFING - Do not destroy other players' builds without permission
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-map-marker-alt"></i></span>
+                    NO GRIEFING SPAWN - The spawn area is protected, do not attempt to modify it
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-bug"></i></span>
+                    No exploiting bugs or glitches
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-robot"></i></span>
+                    No AFK farming without staff approval
+                </div>
+            </div>
+            
+            <div class="rule-category">
+                <h3><i class="fas fa-fist-raised"></i> PvP Rules</h3>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-crosshairs"></i></span>
+                    No spawn killing or camping
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-user-friends"></i></span>
+                    No teaming in solo PvP modes
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-running"></i></span>
+                    Combat logging is prohibited
+                </div>
+            </div>
+            
+            <div class="rule-category">
+                <h3><i class="fas fa-microphone-alt"></i> Voice Chat Rules</h3>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-volume-up"></i></span>
+                    No excessive screaming or loud noises
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-music"></i></span>
+                    No playing music or sounds through voice chat
+                </div>
+                <div class="rule">
+                    <span class="rule-icon"><i class="fas fa-comment"></i></span>
+                    Keep voice chat appropriate (same standards as text chat)
+                </div>
+            </div>
+            
+            <div class="warning">
+                <i class="fas fa-exclamation-triangle"></i> These rules are not exhaustive. Staff members have final say in rule interpretations.
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 MineFamily. All rights reserved.</p>
+            <p>Powered by <a href="https://web.minee.ggff.net" style="color: #55FF55; text-decoration: none;">web.minee.ggff.net</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Create animated Minecraft blocks in background
+        function createBackgroundAnimation() {
+            const container = document.getElementById('background-animation');
+            const blocks = [
+                'grass', 'dirt', 'stone', 'oak_planks', 'cobblestone', 
+                'sand', 'gravel', 'coal_ore', 'iron_ore', 'gold_ore'
+            ];
+            
+            // Create floating blocks
+            for (let i = 0; i < 25; i++) {
+                const block = document.createElement('div');
+                block.classList.add('minecraft-block');
+                
+                // Random block type
+                const blockType = blocks[Math.floor(Math.random() * blocks.length)];
+                block.style.backgroundImage = `url('https://minecraft.wiki/images/${blockType}.png?format=original')`;
+                
+                // Random position and size
+                const size = Math.random() * 80 + 40;
+                block.style.width = `${size}px`;
+                block.style.height = `${size}px`;
+                block.style.left = `${Math.random() * 100}%`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 30 + 20;
+                const delay = Math.random() * 15;
+                block.style.animation = `floatBlock ${duration}s linear ${delay}s infinite`;
+                
+                container.appendChild(block);
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            createBackgroundAnimation();
+            
+            // Add hover effect to rule categories
+            const categories = document.querySelectorAll('.rule-category');
+            categories.forEach(category => {
+                category.addEventListener('mouseenter', () => {
+                    category.style.transform = 'translateX(10px)';
+                });
+                category.addEventListener('mouseleave', () => {
+                    category.style.transform = 'translateX(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
