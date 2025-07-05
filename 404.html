@@ -3,44 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found | MineE Server</title>
+    <title>Block Missing! | MineE Server</title>
+    <link href="https://fonts.googleapis.com/css2?family=Minecraft&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --mc-green: #55FF55;
+            --mc-dark: #1a1a1a;
+            --mc-red: #FF5555;
+            --mc-yellow: #FFFF55;
+        }
+        
         body {
             font-family: 'Minecraft', Arial, sans-serif;
-            background: #1a1a1a url('https://images.unsplash.com/photo-1607513746994-51f730a44832?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+            background: var(--mc-dark) url('https://i.imgur.com/JvJr3c9.png') no-repeat center center fixed;
             background-size: cover;
             color: white;
             text-align: center;
-            padding: 50px;
+            padding: 0;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .error-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 5px solid #555;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 600px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 1s ease-out;
+        }
+        
         h1 {
-            color: #FF5555;
-            font-size: 3rem;
+            color: var(--mc-red);
+            font-size: 4rem;
             text-shadow: 3px 3px 0 #000;
+            margin: 0 0 10px;
+            animation: bounce 2s infinite;
         }
-        a {
-            color: #55FF55;
-            text-decoration: none;
+        
+        .creeper-face {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="black" width="100" height="100"/><rect fill="%2355FF55" x="20" y="20" width="60" height="60"/><rect fill="black" x="30" y="30" width="10" height="10"/><rect fill="black" x="60" y="30" width="10" height="10"/><rect fill="black" x="30" y="50" width="40" height="10"/></svg>');
+            image-rendering: pixelated;
         }
-        .minecraft-button {
+        
+        p {
+            font-size: 1.3rem;
+            margin: 10px 0;
+            color: #AAA;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .highlight {
+            color: var(--mc-yellow);
+            font-weight: bold;
+        }
+        
+        .home-button {
             display: inline-block;
-            padding: 10px 20px;
-            background-color: #55FF55;
+            padding: 12px 30px;
+            background-color: var(--mc-green);
             color: #000;
-            margin-top: 20px;
+            font-size: 1.3rem;
+            text-decoration: none;
             border-radius: 5px;
+            margin-top: 25px;
             text-shadow: 1px 1px 0 #FFF;
             box-shadow: 0 5px 0 #33AA33;
+            transition: all 0.2s;
+            font-family: 'Minecraft', Arial, sans-serif;
+        }
+        
+        .home-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #33AA33;
+            background-color: #66FF66;
+        }
+        
+        .home-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #33AA33;
+        }
+        
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .mobs-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .mob {
+            width: 50px;
+            height: 50px;
+            image-rendering: pixelated;
+            opacity: 0.7;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .mob:hover {
+            transform: translateY(-5px);
+            opacity: 1;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
     </style>
-    <!-- Use your existing favicon -->
-    <link rel="icon" href="/media/icons/favicon.ico">
 </head>
 <body>
-    <h1>404</h1>
-    <p>Oops! This chunk hasn't loaded yet...</p>
-    <img src="https://i.imgur.com/JzY9X8c.png" alt="Minecraft Pickaxe" width="100">
-    <p>The page you're looking for was mined away or never existed.</p>
-    <a href="/" class="minecraft-button">Back to Home</a>
+    <div class="error-container">
+        <h1>404</h1>
+        <div class="creeper-face"></div>
+        <p class="highlight">CHUNK NOT FOUND!</p>
+        <p>The block you're looking for has been mined or never existed.</p>
+        
+        <div class="mobs-container">
+            <img src="https://i.imgur.com/4AiXzf8.png" class="mob" alt="Creeper" title="Sssss... BOOM!">
+            <img src="https://i.imgur.com/7YXZ1yR.png" class="mob" alt="Zombie" title="Brains...">
+            <img src="https://i.imgur.com/9nJq3Wk.png" class="mob" alt="Skeleton" title="Clack clack!">
+            <img src="https://i.imgur.com/VvJkQxE.png" class="mob" alt="Enderman" title="...">
+        </div>
+        
+        <p>Try one of these instead:</p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <a href="/" class="home-button">Home</a>
+            <a href="/rules.html" class="home-button">Rules</a>
+        </div>
+    </div>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particleCount = 30;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                const size = Math.random() * 5 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                const duration = Math.random() * 10 + 5;
+                particle.style.animation = `float ${duration}s infinite ease-in-out`;
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                document.body.appendChild(particle);
+            }
+        }
+        
+        // Make mobs interactive
+        function setupMobs() {
+            const mobs = document.querySelectorAll('.mob');
+            mobs.forEach(mob => {
+                mob.addEventListener('click', () => {
+                    const sounds = {
+                        'Creeper': 'https://www.myinstants.com/media/sounds/creeper.mp3',
+                        'Zombie': 'https://www.myinstants.com/media/sounds/zombie.mp3',
+                        'Skeleton': 'https://www.myinstants.com/media/sounds/skeleton.mp3',
+                        'Enderman': 'https://www.myinstants.com/media/sounds/enderman.mp3'
+                    };
+                    const sound = new Audio(sounds[mob.alt]);
+                    sound.volume = 0.3;
+                    sound.play();
+                });
+            });
+        }
+        
+        // Show a random tip
+        function showRandomTip() {
+            const tips = [
+                "Did you know creepers fear cats?",
+                "Try mining straight down! (Just kidding)",
+                "Diamonds spawn below Y=16",
+                "Beds explode in the Nether",
+                "You can defeat the Ender Dragon!"
+            ];
+            document.getElementById('random-tip').textContent = 
+                tips[Math.floor(Math.random() * tips.length)];
+        }
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            setupMobs();
+            showRandomTip();
+        });
+    </script>
 </body>
 </html>
