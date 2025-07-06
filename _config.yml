@@ -1,5 +1,8 @@
+permalink: pretty
 defaults:
-  - scope:
+  -
+    scope:
       path: ""
     values:
-      index: home.html
+      layout: "default"
+      index: "home.html"
